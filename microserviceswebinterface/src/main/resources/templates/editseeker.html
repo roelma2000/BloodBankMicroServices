@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+  <title>BLOOD BANK INFORMATION SYSTEM</title>
+</head>
+<body>
+<div>
+  <<nav class="navbar navbar-expand-lg bg-body-tertiary bg-dark" data-bs-theme="dark" >
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">BLOOD BANK INFORMATION SYSTEM</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/">Seeker</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/bloodbanks">Blood Banks</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/bloodstocks">Stocks</a>
+          </li>
+        </ul>
+<!--        <ul class="navbar-nav ms-auto">-->
+<!--          <li class="nav-item" sec:authorize="isAuthenticated()">-->
+<!--            <form th:if="${#authorization.expression('isAuthenticated()')}" method="post" th:action="@{/logout}" class="nav-link" style="display: inline-block; padding: 0;">-->
+<!--              <input type="submit" value="Logout" class="btn btn-link" style="padding: 0; color: red;">-->
+<!--            </form>-->
+<!--          </li>-->
+<!--        </ul>-->
+      </div>
+    </div>
+  </nav>
+</div>
+<div class="container col-md-6 justify-content-center">
+  <h3>Edit Seeker Information</h3>
+  <hr>
+
+  <form th:action="@{/seekers/{seekerId}/edit(seekerId=${seeker.seekerId})}" th:object="${seeker}" method="post">
+  <input type="hidden" th:field="*{seekerId}">
+    <input type="hidden" th:field="*{age}">
+    <div class="mb-3">
+      <label for="firstName" class="form-label">First Name</label>
+      <input type="text" class="form-control" id="firstName" placeholder="John" th:field="*{firstName}">
+      <div th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="text-danger"></div>
+    </div>
+    <div class="mb-3">
+      <label for="lastName" class="form-label">Last Name</label>
+      <input type="text" class="form-control" id="lastName"  placeholder="Doe" th:field="*{lastName}">
+      <div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="text-danger"></div>
+    </div>
+
+    <div class="mb-3">
+      <label for="birthdate" class="form-label">Birthdate</label>
+      <input type="date" class="form-control" id="birthdate"  th:field="*{birthdate}">
+      <div th:if="${#fields.hasErrors('birthdate')}" th:errors="*{birthdate}" class="text-danger"></div>
+    </div>
+
+    <div class="mb-3">
+      <label for="gender" class="form-label">Gender</label>
+      <select class="form-control" id="gender" th:field="*{gender}">
+        <option value="">Choose...</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Other">Other</option>
+        <option value="I prefer not to say">I prefer not to say</option>
+      </select>
+      <div th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}" class="text-danger"></div>
+    </div>
+    <div class="mb-3">
+      <label for="bloodGroup" class="form-label">Blood Group</label>
+      <select class="form-control" id="bloodGroup" th:field="*{bloodGroup}">
+        <option value="">Choose...</option>
+        <option value="A+">A+</option>
+        <option value="A-">A-</option>
+        <option value="B+">B+</option>
+        <option value="B-">B-</option>
+        <option value="AB+">AB+</option>
+        <option value="AB-">AB-</option>
+        <option value="O+">O+</option>
+        <option value="O-">O-</option>
+      </select>
+      <div th:if="${#fields.hasErrors('bloodGroup')}" th:errors="*{bloodGroup}" class="text-danger"></div>
+    </div>
+
+    <div class="mb-3">
+      <label for="city" class="form-label">City</label>
+      <input type="text" class="form-control" id="city"   th:field="*{city}">
+      <div th:if="${#fields.hasErrors('city')}" th:errors="*{city}" class="text-danger"></div>
+    </div>
+    <div class="mb-3">
+      <label for="phone" class="form-label">Phone</label>
+      <input type="text" class="form-control" id="phone" th:field="*{phone}" required oninput="if (this.value.length > 10) this.value = this.value.slice(0, 10)">
+      <div th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" class="text-danger"></div>
+      <div th:if="${phoneError}" th:text="${phoneError}" class="text-danger"></div>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+
+</div>
+</body>
+
+</html>

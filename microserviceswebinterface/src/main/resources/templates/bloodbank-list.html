@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+  <title>BLOOD BANK INFORMATION SYSTEM</title>
+</head>
+<body>
+<div>
+  <nav class="navbar navbar-expand-lg bg-body-tertiary bg-dark" data-bs-theme="dark" >
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">BLOOD BANK INFORMATION SYSTEM</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/">Seeker</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/bloodbanks">BloodBanks</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/bloodstocks">Stocks</a>
+          </li>
+        </ul>
+
+      </div>
+    </div>
+  </nav>
+</div>
+<div class="container">
+  <h3>Blood Bank Management</h3>
+  <hr>
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th colspan="9"><a class="btn btn-primary" href="/bloodbanks/add" role="button">Add BloodBank</a></th>
+    </tr>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">BloodBank Name</th>
+      <th scope="col">Address</th>
+      <th scope="col">City</th>
+      <th scope="col">Phone</th>
+      <th scope="col">Website</th>
+      <th scope="col">Email</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="bloodbank:${bloodbanks}">
+      <th scope="row" th:text="${bloodbank.bbnid}"></th>
+      <td th:text="${bloodbank.bloodbankName}"></td>
+      <td class="address-cell" th:text="${bloodbank.address}"></td>
+      <td th:text="${bloodbank.city}"></td>
+      <td th:text="${bloodbank.phone}"></td>
+      <td th:text="${bloodbank.website}"></td>
+      <td th:text="${bloodbank.email}"></td>
+      <td>
+        <a class="btn btn-outline-primary me-md-2" th:href="@{/bloodbanks/{bbnid}/edit(bbnid=${bloodbank.bbnid})}" role="button">Update</a>
+      </td>
+      <td>
+        <form th:action="@{/bloodbanks/__${bloodbank.bbnid}__/delete}" method="post">
+          <button type="submit" class="btn btn-outline-danger me-md-2">Delete</button>
+        </form>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<style>
+  .address-cell {
+    max-width: 200px;
+    word-wrap: break-word;
+  }
+</style>
+
+</body>
+
+</html>
